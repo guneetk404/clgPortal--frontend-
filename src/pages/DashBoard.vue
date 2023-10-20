@@ -23,7 +23,7 @@
           <v-card-text>
             <div class="margin-bottom">
               <v-icon>mdi-school</v-icon>
-              <span class="spanitem ">Punjab Technical University</span>
+              <span class="spanitem">Punjab Technical University</span>
             </div>
             <v-icon>mdi-town-hall</v-icon>
             <span class="spanitem">Computer Science Engineering </span>
@@ -68,53 +68,55 @@
       </v-col>
     </v-row>
 
-    <v-card style="max-height: 417px; overflow-y: auto;">
+    <v-card style="max-height: 390px; overflow-y: auto; margin: 25px">
       <!-- Card Title -->
-      <v-card-title class="headline">
-        Announcement
-      </v-card-title>
-      
-      <div class="announcement" v-for="i in announcement" :key="i" >
+      <v-card-title class="headline"> Announcement </v-card-title>
+
+      <div class="announcement" v-for="i in announcement" :key="i">
         <!-- Scrollable Card Content -->
-        <v-card-text >
-          <div class="announcement-content">
-            Special Chance Exam form DEP 
+        <v-card-text>
+          <div class="announcement-content">Special Chance Exam form DEP
+
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-icon small>mdi-calendar</v-icon>
+              <span class="announcement-date"> (11 Oct 2023) </span>
+            </v-card-actions>
           </div>
-        </v-card-text>
-    
+          </v-card-text>
+
         <!-- Announcement Date -->
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-icon small>mdi-calendar</v-icon>
-          <span class="announcement-date"> (11 Oct 2023) </span>
-        </v-card-actions>
-        
-        </div>
-        </v-card>    
+      </div>
+    </v-card>
   </div>
 </template>
 
 <script>
 export default {
-  data(){
-    return{
-      announcement:[1,2,3,4,5,6,7,8,9,10],
-    }
-  }
+  data() {
+    return {
+      announcement: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+    };
+  },
 };
 </script>
 
 <style scoped>
-.headline{
-  margin:25px;
-  background-color:rgb(27, 66, 36);
-  border-radius:4px
+
+.announcement-content {
+  background-color: rgb(242, 242, 240);
+  box-shadow: 8px 8px 15px 0 rgba(0, 0, 0, 0.5);
+
 }
-.profileImg{
-  padding:10px !important;
+.headline {
+  background-color: rgb(27, 66, 36);
+  border-radius: 4px;
 }
-.margin-bottom{
-  margin-bottom:16px;
+.profileImg {
+  padding: 10px !important;
+}
+.margin-bottom {
+  margin-bottom: 16px;
 }
 .nav-margin {
   margin-top: 74px;

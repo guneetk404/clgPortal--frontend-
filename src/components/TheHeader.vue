@@ -50,7 +50,7 @@
             </v-col>
           </v-row>
         </v-list-item>
-        <v-list-item link to="/home">
+        <v-list-item link to="/profile">
           <v-row>
             <v-col cols="auto">
               <v-list-item-icon>
