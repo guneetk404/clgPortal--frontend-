@@ -14,7 +14,7 @@
 
     <v-navigation-drawer app temporary v-model="drawer">
       <v-list>
-        <v-list-item link to="/home">
+        <v-list-item link to="/dashboard">
           <v-row>
             <v-col cols="auto">
               <v-list-item-icon>
@@ -26,7 +26,7 @@
             </v-col>
           </v-row>
         </v-list-item>
-        <v-list-item link to="/home">
+        <v-list-item link to="/announcement">
           <v-row>
             <v-col cols="auto">
               <v-list-item-icon>
@@ -74,7 +74,7 @@
             </v-col>
           </v-row>
         </v-list-item>
-        <v-list-item link to="/home">
+        <v-list-item link to="/enquiry">
           <v-row>
             <v-col cols="auto">
               <v-list-item-icon>

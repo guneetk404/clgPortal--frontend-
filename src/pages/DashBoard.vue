@@ -111,6 +111,7 @@ export default {
 .headline {
   background-color: rgb(27, 66, 36);
   border-radius: 4px;
+  color:white;
 }
 .profileImg {
   padding: 10px !important;

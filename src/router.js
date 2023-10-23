@@ -5,22 +5,31 @@ import DashBoard from "./pages/DashBoard.vue";
 import TheHeader from './components/TheHeader.vue'
 import StudentProfile from './pages/StudentProfile.vue'
 import extraFile from './pages/extraFile.vue'
+import studentEnquiry from './pages/studentEnquiry.vue'
+import Announcement from './pages/AnnouncementPage.vue'
 
 const routes = [
   {
     path: "/",
     component: HomePage,
   },
-  {
-    path: "/dash",
-    component: DashBoard,
-  },
+ 
   {
     path: "/n",
     component: extraFile,
   },
   {
-    path: '/d',
+    path: '/announcement',
+    component: TheHeader, // Use your layout component
+    children: [
+      {
+        path: '',
+        component: Announcement, // This component will be displayed in the router-view
+      },
+    ],
+  },
+  {
+    path: '/dashboard',
     component: TheHeader, // Use your layout component
     children: [
       {
@@ -36,6 +45,16 @@ const routes = [
       {
         path: '',
         component: StudentProfile, // This component will be displayed in the router-view
+      },
+    ],
+  },
+  {
+    path: '/enquiry',
+    component: TheHeader, // Use your layout component
+    children: [
+      {
+        path: '',
+        component: studentEnquiry, // This component will be displayed in the router-view
       },
     ],
   },
