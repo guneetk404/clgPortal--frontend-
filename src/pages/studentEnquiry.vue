@@ -1,8 +1,9 @@
 <template>
   <div class="enquiryContainer">
-    <h2>Student Enquiry</h2>
+    <h2 class="a-heading">Student Enquiry</h2>
+    <hr />
 
-    <v-card>
+    <v-card color="transparent">
       <v-tabs v-model="tab" color="deep-purple-accent-4" align-tabs="center">
         <v-tab :value="1">Student Enquiry Form</v-tab>
         <v-tab :value="2">Student Enquiry List</v-tab>
@@ -14,18 +15,21 @@
             <v-form @submit.prevent="submitForm" class="custom-form">
               <!-- Query Related To -->
               <v-text-field
+                variant="outlined"
                 label="Query Related To"
                 required
                 v-model="inquiry.queryRelatedTo"
               ></v-text-field>
               <!-- Description -->
               <v-textarea
+                variant="outlined"
                 label="Description"
                 required
                 v-model="inquiry.description"
               ></v-textarea>
               <!-- Phone -->
               <v-text-field
+                variant="outlined"
                 label="Phone"
                 required
                 type="tel"
@@ -34,6 +38,7 @@
               <!-- <v-row align="center">
                 <v-icon color="primary">mdi-phone</v-icon>
                 <v-text-field
+               
                   label="Phone"
                   v-model="inquiry.phone"
                   required
@@ -43,6 +48,7 @@
               <!-- Email ID -->
 
               <v-text-field
+                variant="outlined"
                 label="Email ID"
                 required
                 type="email"
@@ -91,9 +97,9 @@ export default {
       tab: 1, // Initially select the first tab (the form)
       inquiries: [], // Initialize with your student inquiries data
       inquiry: {
-        queryRelatedTo: "this Query is related to fee structure",
+        queryRelatedTo: "This Query is related to fee structure",
         description:
-          "I WANT THE PROPER details regarding btech cse course fees",
+          "I want the  details regarding btech cse course fees",
         phone: "6393970007",
         emailId: "guneetk404@gmail.com",
         id: 1, // You can use a unique ID for each inquiry
@@ -118,8 +124,12 @@ export default {
 </script>
 
 <style>
+.a-heading {
+  margin: 10px;
+}
 .enquiryContainer {
   margin-top: 80px;
+
 }
 .custom-form {
   width: 90%;
@@ -127,7 +137,6 @@ export default {
   padding: 16px; /* Add padding to the form */
   border-radius: 8px; /* Add rounded corners */
   text-align: center;
-  background-color: #f2f2f2; /* Custom background color for the form */
 }
 .inquiry-list-item {
   background-color: #f7f7f7;

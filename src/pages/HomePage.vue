@@ -1,18 +1,8 @@
 <template>
-  <div class="homecontainer" style="margin-top:'10rem';">
-    <v-carousel class="carousel">
+  <div class="homecontainer" style="margin-top: '10rem'">
+    <v-carousel class="carousel" :show-arrows=false hide-delimiters>
       <v-carousel-item
         src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
-        cover
-      ></v-carousel-item>
-
-      <v-carousel-item
-        src="https://cdn.vuetifyjs.com/images/cards/hotel.jpg"
-        cover
-      ></v-carousel-item>
-
-      <v-carousel-item
-        src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg"
         cover
       ></v-carousel-item>
     </v-carousel>
@@ -45,7 +35,7 @@
         <GoogleLogin :callback="handleGoogleLogin" class="google-login" /> -->
         <div class="notreg">
           <span>Not Registered?</span>
-          <router-link to="/signup">Sign Up here</router-link>
+          <router-link to="/dashboard">Sign Up here</router-link>
           <div>
             <router-link to="/reset-password">Forget Password</router-link>
           </div>
@@ -57,7 +47,7 @@
 </template>
 
 <script>
-export default {}
+export default {};
 </script>
 
 <style scoped>

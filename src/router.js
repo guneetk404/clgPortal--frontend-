@@ -7,6 +7,8 @@ import StudentProfile from './pages/StudentProfile.vue'
 import extraFile from './pages/extraFile.vue'
 import studentEnquiry from './pages/studentEnquiry.vue'
 import Announcement from './pages/AnnouncementPage.vue'
+import studentDocuments  from './pages/StudentDocuments.vue'
+import FeedbackForm from './pages/FeedbackForm.vue'
 
 const routes = [
   {
@@ -55,6 +57,26 @@ const routes = [
       {
         path: '',
         component: studentEnquiry, // This component will be displayed in the router-view
+      },
+    ],
+  },
+  {
+    path: '/documents',
+    component: TheHeader, // Use your layout component
+    children: [
+      {
+        path: '',
+        component: studentDocuments, // This component will be displayed in the router-view
+      },
+    ],
+  },
+  {
+    path: '/feedback',
+    component: TheHeader, // Use your layout component
+    children: [
+      {
+        path: '',
+        component: FeedbackForm, // This component will be displayed in the router-view
       },
     ],
   },

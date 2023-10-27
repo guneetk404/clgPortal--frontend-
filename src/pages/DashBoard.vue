@@ -3,7 +3,7 @@
     <v-row>
       <!-- First Card -->
       <v-col cols="4">
-        <v-card class="mx-auto" max-width="400" height="240px">
+        <v-card class="mx-auto" height="240px">
           <v-row no-gutters>
             <v-col cols="4" class="profileImg">
               <v-img
@@ -33,11 +33,11 @@
 
       <!-- Second Card -->
       <v-col cols="4">
-        <v-card class="mx-auto" max-width="400" height="240px">
+        <v-card class="mx-auto" height="240px">
           <v-row class="headcolor">
             <v-col cols="8">
               <v-card-text>
-                <v-icon>mdi-fire</v-icon>
+                <v-icon color="white">mdi-fire</v-icon>
                 <span style="color: rgb(255, 255, 255); font-size: 16px">
                   Hot Links
                 </span>
@@ -50,11 +50,11 @@
         </v-card>
       </v-col>
       <v-col cols="4">
-        <v-card class="mx-auto" max-width="400" height="240px">
-          <v-row class="headcolor1">
+        <v-card class="mx-auto" height="240px">
+          <v-row style="background: rgb(125, 128, 48)">
             <v-col cols="8">
               <v-card-text>
-                <v-icon>mdi-message</v-icon>
+                <v-icon color="white">mdi-message</v-icon>
                 <span style="color: rgb(255, 255, 255); font-size: 16px">
                   Latest Enquiry
                 </span>
@@ -67,27 +67,75 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-row>
+      <v-col cols="8">
+        <v-card style="max-height: 596px; overflow-y: auto">
+          <!-- Card Title -->
 
-    <v-card style="max-height: 390px; overflow-y: auto; margin: 25px">
-      <!-- Card Title -->
-      <v-card-title class="headline"> Announcement </v-card-title>
+          <v-card-title class="headline">
+            <v-icon size="extra-small">mdi-bell-ring</v-icon> Announcement
+          </v-card-title>
+          <div class="announcement" v-for="i in announcement" :key="i">
+            <!-- Scrollable Card Content -->
+            <v-card-text>
+              <div class="announcement-content">
+                <h3>
+                  Special Chance Exam form DEP
 
-      <div class="announcement" v-for="i in announcement" :key="i">
-        <!-- Scrollable Card Content -->
-        <v-card-text>
-          <div class="announcement-content">Special Chance Exam form DEP
+                  <span class="announcement-date"> (11 Oct 2023) </span>
+                </h3>
 
-            <v-card-actions>
-              <v-spacer></v-spacer>
-              <v-icon small>mdi-calendar</v-icon>
-              <span class="announcement-date"> (11 Oct 2023) </span>
-            </v-card-actions>
+                <div class="content">
+                  This is the notification for the students to take special
+                  exams This is the notification for the students to take
+                  special exams This is the notification for the students to
+                  take special exams This is the notification for the students
+                  to take special exams
+                </div>
+
+                <v-card-actions>
+                  <v-spacer></v-spacer>
+                  <v-icon small>mdi-download</v-icon>
+                  <!-- <span class="announcement-date"> Download </span> -->
+                </v-card-actions>
+              </div>
+            </v-card-text>
           </div>
+        </v-card>
+      </v-col>
+      <v-col cols="4">
+        <v-card class="mx-auto" height="240px">
+          <v-row style="background: rgb(145, 58, 20)">
+            <v-col cols="8">
+              <v-card-text>
+                <v-icon color="white">mdi-file-document-outline</v-icon>
+                <span style="color: rgb(255, 255, 255); font-size: 16px">
+                  Latest Documents
+                </span>
+              </v-card-text>
+            </v-col>
+          </v-row>
+          <v-card-text>
+            <p class="text--primary">No Documents available</p>
           </v-card-text>
-
-        <!-- Announcement Date -->
-      </div>
-    </v-card>
+        </v-card>
+        <v-card class="mx-auto mt-4" height="340px">
+          <v-row c style="background: rgb(87, 8, 35)">
+            <v-col cols="8">
+              <v-card-text>
+                <v-icon color="white">mdi-chart-bar</v-icon>
+                <span style="color: rgb(255, 255, 255); font-size: 16px">
+                  Progress Calculator
+                </span>
+              </v-card-text>
+            </v-col>
+          </v-row>
+          <v-card-text>
+            <p class="text--primary">Progress is not generated yet</p>
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -102,31 +150,35 @@ export default {
 </script>
 
 <style scoped>
-
+.mx-auto {
+  box-shadow: 2px -4px 14px rgba(0, 0, 0, 0.2)
+}
+.content {
+  margin-top: 15px;
+}
 .announcement-content {
   background-color: rgb(242, 242, 240);
   box-shadow: 8px 8px 15px 0 rgba(0, 0, 0, 0.5);
-
 }
 .headline {
   background-color: rgb(27, 66, 36);
   border-radius: 4px;
-  color:white;
+  color: white;
 }
 .profileImg {
   padding: 10px !important;
 }
 .margin-bottom {
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 .nav-margin {
   margin-top: 74px;
+  margin-bottom: 1rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
 }
 .headcolor {
   background-color: rgb(233, 30, 99);
-}
-.headcolor1 {
-  background-color: rgb(125, 128, 48);
 }
 
 .spanitem {

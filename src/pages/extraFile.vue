@@ -12,6 +12,26 @@
     <div class="box"></div>
     <div class="box"></div>
   </div>
+  <v-menu :close-on-content-click="false" location="end">
+    <template v-slot:activator="{ props }">
+      <v-btn color="#802f59" v-bind="props">
+        <v-icon icon="mdi-account" />
+      </v-btn>
+    </template>
+
+    <v-card min-width="300">
+      <v-list>
+        <v-list-item title="userName" subtitle="userEmail"> </v-list-item>
+      </v-list>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+
+        <v-btn variant="text" @click="menu = false"> Cancel </v-btn>
+        <v-btn color="primary" variant="text" @click="onLogout">logout </v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-menu>
 </template>
 
 <script>
