@@ -161,7 +161,7 @@ export default {
   methods: {
     submitFeedback() {
       // Implement your submission logic here
-      console.log("Feedback submitted:", this.formData);
+      // console.log("Feedback submitted:", this.formData);
       // You can send the feedback data to a server or perform other actions
     },
   },

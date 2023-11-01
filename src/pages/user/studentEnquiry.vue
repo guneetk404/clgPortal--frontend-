@@ -18,7 +18,7 @@
                 variant="outlined"
                 label="Query Related To"
                 required
-                v-model="inquiry.queryRelatedTo"
+                v-model="inquiry.title"
               ></v-text-field>
               <!-- Description -->
               <v-textarea
@@ -69,7 +69,7 @@
                 class="inquiry-list-item"
               >
                 <v-card-title class="inquiry-title"
-                  >Query Related To: {{ inquiry.queryRelatedTo }}</v-card-title
+                  >Query Related To: {{ inquiry.title }}</v-card-title
                 >
                 <v-card-subtitle class="inquiry-subtitle"
                   >Description: {{ inquiry.description }}</v-card-subtitle
@@ -91,33 +91,42 @@
 </template>
 
 <script>
+import enquiryApi from "../../services/enquiryApi.js";
 export default {
   data() {
     return {
       tab: 1, // Initially select the first tab (the form)
       inquiries: [], // Initialize with your student inquiries data
       inquiry: {
-        queryRelatedTo: "This Query is related to fee structure",
-        description:
-          "I want the  details regarding btech cse course fees",
-        phone: "6393970007",
-        emailId: "guneetk404@gmail.com",
-        id: 1, // You can use a unique ID for each inquiry
+        title: "This Query is related to fee structure",
+        description: "I want the  details regarding btech cse course fees",
+        // You can use a unique ID for each inquiry
       },
     };
   },
+  created() {
+    this.getEnquiries();
+  },
   methods: {
-    submitForm() {
+    async submitForm() {
       // Assign a unique ID to the new inquiry
-      this.inquiry.id = this.inquiries.length + 1;
+      // this.inquiry.id = this.inquiries.length + 1;
+      // this.inquiry = {
+      //   title: "",
+      //   description: "",
+      //   phone: "",
+      //   emailId: "",
+      //   id: 1, // Reset ID for the next inquiry
+      // };
+      // console.log(this.inquiry);
+      const res = await enquiryApi.postEnquiry(this.inquiry);
       this.inquiries.push({ ...this.inquiry });
-      this.inquiry = {
-        queryRelatedTo: "",
-        description: "",
-        phone: "",
-        emailId: "",
-        id: 1, // Reset ID for the next inquiry
-      };
+      console.log(res.data);
+    },
+    async getEnquiries() {
+      const res = await enquiryApi.getEnquiries();
+      this.inquiries = res.data.data;
+      console.log(res.data);
     },
   },
 };
@@ -129,7 +138,6 @@ export default {
 }
 .enquiryContainer {
   margin-top: 80px;
-
 }
 .custom-form {
   width: 90%;

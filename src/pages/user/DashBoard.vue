@@ -1,11 +1,12 @@
 <template>
   <div class="nav-margin">
-    <v-row>
+    <!-- <div class="guneet"> -->
+    <v-row guneet>
       <!-- First Card -->
-      <v-col cols="4">
+      <v-col  class="item-1">
         <v-card class="mx-auto" height="240px">
           <v-row no-gutters>
-            <v-col cols="4" class="profileImg">
+            <v-col  class="profileImg">
               <v-img
                 src="https://lh3.googleusercontent.com/a/ACg8ocIhQiMyP46BT7wKJW3qUc9IXeWQtFYPTBiEBcpACya7wA=s288-c-no"
                 max-width="150"
@@ -32,7 +33,7 @@
       </v-col>
 
       <!-- Second Card -->
-      <v-col cols="4">
+      <v-col  class="item-1">
         <v-card class="mx-auto" height="240px">
           <v-row class="headcolor">
             <v-col cols="8">
@@ -49,7 +50,7 @@
           </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="4">
+      <v-col  class="item-1">
         <v-card class="mx-auto" height="240px">
           <v-row style="background: rgb(125, 128, 48)">
             <v-col cols="8">
@@ -67,6 +68,7 @@
         </v-card>
       </v-col>
     </v-row>
+  <!-- </div> -->
     <v-row>
       <v-col cols="8">
         <v-card style="max-height: 596px; overflow-y: auto">
@@ -150,6 +152,14 @@ export default {
 </script>
 
 <style scoped>
+.item-1{
+  flex-grow:1;
+  flex-basis:300px;
+}
+.guneet{
+  display:flex;
+  flex-wrap:wrap;
+}
 .mx-auto {
   box-shadow: 2px -4px 14px rgba(0, 0, 0, 0.2)
 }
