@@ -12,11 +12,13 @@ import FeedbackForm from "./pages/user/FeedbackForm.vue";
 
 
 //admin pages 
+import AdminHeader from "./components/AdminHeader.vue"
 import AdminHome from "./pages/adminPages/HomePage.vue"
 import AdminAnnouncement from "./pages/adminPages/TheAnnouncement.vue"
 import AdminEnquiry from "./pages/adminPages/AdminEnquiry.vue"
 import AdminFeedback from "./pages/adminPages/AdminFeedback.vue"
-
+import RegisterStudent from "./pages/adminPages/registerStudent.vue"
+import AllStudents from "./pages/adminPages/AllStudents.vue"
 
 const routes = [
   {
@@ -90,24 +92,66 @@ const routes = [
   },
 
   // admin routes here
-
   {
     path: "/admin",
-    component: AdminHome,
+    component: AdminHeader, // Use your layout component
+    children: [
+      {
+        path: "",
+        component: AdminHome, // This component will be displayed in the router-view
+      },
+    ],
   },
   {
     path: "/admin-announcement",
-    component: AdminAnnouncement,
+    component: AdminHeader,
+    children:[
+      {
+        path:"",
+        component:AdminAnnouncement
+      }
+    ]
   },
   {
     path: "/admin-enquiry",
-    component: AdminEnquiry,
+    component: AdminHeader,
+    children:[
+      {
+        path:"",
+        component:AdminEnquiry
+      }
+    ]
   },
   {
     path: "/admin-feedback",
-    component: AdminFeedback,
+    component: AdminHeader,
+    children:[
+      {
+        path:"",
+        component:AdminFeedback
+      }
+    ]
   },
-  
+  {
+    path: "/admin-all-users",
+    component: AdminHeader,
+    children:[
+      {
+        path:"",
+        component:AllStudents
+      }
+    ]
+  },
+  {
+    path: "/admin-register",
+    component: AdminHeader,
+    children:[
+      {
+        path:"",
+        component:RegisterStudent
+      }
+    ]
+  },
  
 ];
 

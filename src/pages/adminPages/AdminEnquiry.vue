@@ -93,7 +93,7 @@ export default {
     VDataTable,
   },
   data: () => ({
-    enquiryComment: "comment",
+    enquiryComment: "",
     dialog: false,
     dialogDelete: false,
     headers: [
@@ -106,6 +106,7 @@ export default {
       { title: "Description", key: "description" },
       { title: "Status", key: "status" },
       { title: "Date ", key: "date" },
+      { title: "Enquiry By", key: "user_id.email" },
       { title: "Actions", key: "actions", sortable: false },
     ],
     enquiries: [],
@@ -155,6 +156,7 @@ export default {
       // ];
       const res = await enquiryApi.getAllEnquiries();
       this.enquiries = res.data.data;
+      console.log(this.enquiries);
     },
 
     editItem(item) {
@@ -172,9 +174,11 @@ export default {
 
     async markItemConfirm() {
       console.log(this.editedItem);
-      const id =this.editedItem._id;
+      const id = this.editedItem._id;
       // const status = "success";
-      const res = await enquiryApi.updateEnquiryStatus(id,{status:"success"});
+      const res = await enquiryApi.updateEnquiryStatus(id, {
+        status: "success",
+      });
       Object.assign(this.enquiries[this.editedIndex], this.editedItem);
 
       console.log(res.data);
@@ -213,3 +217,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+
+
+.adminAnnouncementContainer{
+  margin-top:80px;
+}
+
+</style>

@@ -14,7 +14,7 @@
           <v-dialog v-model="dialog" max-width="500px">
             <template v-slot:activator="{ props }">
               <v-btn color="primary" dark class="mb-2" v-bind="props">
-                New Item
+                Create New Announcement
               </v-btn>
             </template>
             <v-card>
@@ -249,3 +249,10 @@ export default {
   },
 };
 </script>
+
+<style>
+
+.adminAnnouncementContainer{
+  margin-top:75px;
+}
+</style>

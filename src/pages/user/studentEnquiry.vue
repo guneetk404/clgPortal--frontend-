@@ -10,49 +10,35 @@
       </v-tabs>
       <v-tabs-items v-model="tab">
         <v-tab-item :value="1" v-if="tab == 1">
-          <!-- Student Inquiry Form Content -->
           <v-card-text>
             <v-form @submit.prevent="submitForm" class="custom-form">
-              <!-- Query Related To -->
               <v-text-field
                 variant="outlined"
                 label="Query Related To"
                 required
                 v-model="inquiry.title"
               ></v-text-field>
-              <!-- Description -->
               <v-textarea
                 variant="outlined"
                 label="Description"
                 required
                 v-model="inquiry.description"
               ></v-textarea>
-              <!-- Phone -->
               <v-text-field
+                disabled
                 variant="outlined"
                 label="Phone"
                 required
                 type="tel"
-                v-model="inquiry.phone"
+                v-model="phone"
               ></v-text-field>
-              <!-- <v-row align="center">
-                <v-icon color="primary">mdi-phone</v-icon>
-                <v-text-field
-               
-                  label="Phone"
-                  v-model="inquiry.phone"
-                  required
-                  type="tel"
-                ></v-text-field>
-              </v-row> -->
-              <!-- Email ID -->
-
               <v-text-field
+                disabled
                 variant="outlined"
                 label="Email ID"
                 required
                 type="email"
-                v-model="inquiry.emailId"
+                v-model="email"
               ></v-text-field>
               <v-btn type="submit" color="deep-purple-accent-4">Submit</v-btn>
             </v-form>
@@ -76,11 +62,15 @@
                 >
 
                 <v-card-subtitle class="inquiry-subtitle">
-                  Phone: {{ inquiry.phone }}</v-card-subtitle
+                  Phone: {{ phone }}</v-card-subtitle
                 >
                 <v-card-subtitle class="inquiry-subtitle"
-                  >Email: {{ inquiry.emailId }}</v-card-subtitle
+                  >Email: {{ email }}</v-card-subtitle
                 >
+                <!-- <v-card-subtitle class="inquiry-subtitle"
+                >Description: {{ inquiry.comments.comment_id.comment }}</v-card-subtitle
+              > -->
+                <div class="float-right mr-4 " > Status : {{inquiry.status}}</div>
               </v-card-item>
             </v-card>
           </v-card-text>
@@ -92,6 +82,8 @@
 
 <script>
 import enquiryApi from "../../services/enquiryApi.js";
+import userApi from "../../services/userApi";
+
 export default {
   data() {
     return {
@@ -100,33 +92,43 @@ export default {
       inquiry: {
         title: "This Query is related to fee structure",
         description: "I want the  details regarding btech cse course fees",
-        // You can use a unique ID for each inquiry
+        status:""
       },
+      phone: null,
+      email: "",
     };
   },
   created() {
     this.getEnquiries();
+    this.profileInformation();
   },
   methods: {
     async submitForm() {
-      // Assign a unique ID to the new inquiry
-      // this.inquiry.id = this.inquiries.length + 1;
-      // this.inquiry = {
-      //   title: "",
-      //   description: "",
-      //   phone: "",
-      //   emailId: "",
-      //   id: 1, // Reset ID for the next inquiry
-      // };
-      // console.log(this.inquiry);
       const res = await enquiryApi.postEnquiry(this.inquiry);
-      this.inquiries.push({ ...this.inquiry });
-      console.log(res.data);
+      if (res.data.success) {
+        this.inquiries.push({ ...this.inquiry });
+      } else {
+        console.log("error posting query");
+      }
     },
     async getEnquiries() {
       const res = await enquiryApi.getEnquiries();
-      this.inquiries = res.data.data;
-      console.log(res.data);
+      if (res.data.success) {
+        this.inquiries = res.data.data;
+        console.log(this.inquiries);
+        console.log(this.inquiries[5].comments[0].comment_id.comment);
+      } else {
+        console.log("error getting queries");
+      }
+    },
+    async profileInformation() {
+      const res = await userApi.getUserData();
+      if (res.data.success) {
+        this.phone = res.data.user.phone;
+        this.email = res.data.user.email;
+      } else {
+        console.log("profile not fetched");
+      }
     },
   },
 };

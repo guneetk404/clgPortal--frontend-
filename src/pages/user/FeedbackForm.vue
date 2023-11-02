@@ -11,7 +11,7 @@
 
             <v-card-text>
               <!-- Name and Email Fields -->
-              <v-row>
+              <!-- <v-row>
                 <v-col cols="12" md="6">
                   <v-text-field
                     variant="outlined"
@@ -26,13 +26,13 @@
                     v-model="formData.email"
                   ></v-text-field>
                 </v-col>
-              </v-row>
+              </v-row> -->
 
-              <!-- 5-Star Rating -->
-              <div class="rating-section">
-                <div class="rating-label">Rate Your Experience:</div>
+              <!-- 5-Star overall_rating -->
+              <div class="overall_rating-section">
+                <div class="overall_rating-label">Rate Your Experience:</div>
                 <v-rating
-                  v-model="formData.rating"
+                  v-model="formData.overall_rating"
                   background-color="transparent"
                 ></v-rating>
               </div>
@@ -41,15 +41,15 @@
               <div class="feedback-options">
                 <div
                   class="feedback-option"
-                  v-for="(option, index) in radioOptions"
+                  v-for="(parameter, index) in feedbackParameters"
                   :key="index"
                 >
                   <div class="option">
-                    <span>{{ option.label }}</span>
+                    <span>{{ parameter.parameter }}</span>
                   </div>
-                  <v-radio-group v-model="option.selectedValue" row inline>
+                  <v-radio-group v-model="parameter.selectedValue" row inline>
                     <v-radio
-                      v-for="(radio, radioIndex) in option.values"
+                      v-for="(radio, radioIndex) in parameter.options"
                       :key="radioIndex"
                       :label="radio.label"
                       :value="radio.value"
@@ -57,6 +57,8 @@
                   </v-radio-group>
                 </div>
               </div>
+
+              <v-textarea variant="outlined" label="Suggestions"></v-textarea>
             </v-card-text>
 
             <!-- Submit Button -->
@@ -71,98 +73,46 @@
 </template>
 
 <script>
+import feedbackApi from "../../services/feedbackApi";
 export default {
   data() {
     return {
+      options: [],
       formData: {
-        name: "Guneet Singh",
-        email: "Guneetk404@gmail.com",
-        rating: 0, // Initial rating is set to 0 stars
-        courseObjectives: "Neutral",
-        materialMatchesSyllabus: "Neutral",
+        overall_rating: 0, // Initial overall_rating is set to 0 stars
+        suggestion: "",
+
         // Add more feedback options and their initial values here
       },
-      radioOptions: [
-        {
-          name: "materialMatchesSyllabus",
-          label: "Material Presented in Class Matches Syllabus:",
-          selectedValue: "Neutral",
-          values: [
-            { label: "Disagree", value: "Disagree" },
-            { label: "Neutral", value: "Neutral" },
-            { label: "Agree", value: "Agree" },
-          ],
-        },
-        {
-          name: "receivedSyllabus",
-          label: "I Received Syllabus & Course Description:",
-          selectedValue: "Neutral",
-          values: [
-            { label: "Disagree", value: "Disagree" },
-            { label: "Neutral", value: "Neutral" },
-            { label: "Agree", value: "Agree" },
-          ],
-        },
-        {
-          name: "courseObjectivesClear",
-          label: "Course Objectives Stated Clearly:",
-          selectedValue: "Neutral",
-          values: [
-            { label: "Disagree", value: "Disagree" },
-            { label: "Neutral", value: "Neutral" },
-            { label: "Agree", value: "Agree" },
-          ],
-        },
-        {
-          name: "instructorKnowledge",
-          label: "Instructor Shows Adequate Knowledge of Course:",
-          selectedValue: "Neutral",
-          values: [
-            { label: "Disagree", value: "Disagree" },
-            { label: "Neutral", value: "Neutral" },
-            { label: "Agree", value: "Agree" },
-          ],
-        },
-        {
-          name: "efficientClassTime",
-          label: "Class Time Is Used Efficiently:",
-          selectedValue: "Neutral",
-          values: [
-            { label: "Disagree", value: "Disagree" },
-            { label: "Neutral", value: "Neutral" },
-            { label: "Agree", value: "Agree" },
-          ],
-        },
-        {
-          name: "instructorPrepared",
-          label: "The Instructor Is Well Prepared:",
-          selectedValue: "Neutral",
-          values: [
-            { label: "Disagree", value: "Disagree" },
-            { label: "Neutral", value: "Neutral" },
-            { label: "Agree", value: "Agree" },
-          ],
-        },
-        {
-          name: "informativeClass",
-          label: "This Class Was Very Informative:",
-          selectedValue: "Neutral",
-          values: [
-            { label: "Disagree", value: "Disagree" },
-            { label: "Neutral", value: "Neutral" },
-            { label: "Agree", value: "Agree" },
-          ],
-        },
-
-        // You can add more radio options here
-      ],
+      feedbackParameters: [],
     };
   },
+  created() {
+    this.getFeedbackParameter();
+  },
+  computed: {
+    feedback() {
+      return this.feedbackParameters.map((parameter) => ({
+        feedback_parameter_id: parameter._id,
+        feedback_parameter_value: parameter.selectedValue,
+      }));
+    },
+  },
   methods: {
-    submitFeedback() {
-      // Implement your submission logic here
-      // console.log("Feedback submitted:", this.formData);
-      // You can send the feedback data to a server or perform other actions
+    async submitFeedback() {
+      const data = { ...this.formData, feedback: this.feedback };
+      console.log(data);
+      const res = await feedbackApi.postFeedback(data);
+      console.log(res);
+    },
+    async getFeedbackParameter() {
+      const res = await feedbackApi.getFeedbackParams();
+      this.feedbackParameters = res.data.data;
+      this.feedbackParameters = this.feedbackParameters.map((parameter) => ({
+        ...parameter,
+        selectedValue: null,
+      }));
+      // console.log(res.data);
     },
   },
 };
@@ -189,11 +139,11 @@ export default {
   border-radius: 8px;
 }
 
-.rating-section {
+.overall_rating-section {
   margin-top: 20px;
 }
 
-.rating-label {
+.overall_rating-label {
   font-weight: bold;
 }
 

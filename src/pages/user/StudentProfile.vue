@@ -8,9 +8,9 @@
           <div class="profile-image">
             <v-avatar size="160" class="mx-auto">
               <img
-              src="https://lh3.googleusercontent.com/a/ACg8ocIhQiMyP46BT7wKJW3qUc9IXeWQtFYPTBiEBcpACya7wA=s288-c-no"
-              alt="Profile Photo"
-              class="my-auto"
+                src="https://lh3.googleusercontent.com/a/ACg8ocIhQiMyP46BT7wKJW3qUc9IXeWQtFYPTBiEBcpACya7wA=s288-c-no"
+                alt="Profile Photo"
+                class="my-auto"
               />
             </v-avatar>
           </div>
@@ -26,7 +26,7 @@
                   <v-text-field
                     variant="outlined"
                     label="First Name"
-                    v-model="student.firstName"
+                    v-model="student.first_name"
                     :readonly="!editMode"
                     class="custom-text-field"
                   ></v-text-field>
@@ -35,7 +35,7 @@
                   <v-text-field
                     variant="outlined"
                     label="Last Name"
-                    v-model="student.lastName"
+                    v-model="student.last_name"
                     :readonly="!editMode"
                     class="custom-text-field"
                   ></v-text-field>
@@ -52,21 +52,21 @@
               <v-text-field
                 variant="outlined"
                 label="Phone Number"
-                v-model="student.phoneNumber"
+                v-model="student.phone"
                 :readonly="!editMode"
                 class="custom-text-field"
               ></v-text-field>
               <v-text-field
                 variant="outlined"
                 label="Father's Name"
-                v-model="student.fathersName"
+                v-model="student.father_name"
                 :readonly="!editMode"
                 class="custom-text-field"
               ></v-text-field>
               <v-text-field
                 variant="outlined"
                 label="Mother's Name"
-                v-model="student.mothersName"
+                v-model="student.mother_name"
                 :readonly="!editMode"
                 class="custom-text-field"
               ></v-text-field>
@@ -75,7 +75,7 @@
               <v-text-field
                 variant="outlined"
                 label="Address Line 1"
-                v-model="student.addressLine1"
+                v-model="student.address.address_line"
                 :readonly="!editMode"
                 class="custom-text-field"
               ></v-text-field>
@@ -84,7 +84,7 @@
                   <v-text-field
                     variant="outlined"
                     label="Pincode"
-                    v-model="student.pincode"
+                    v-model="student.address.pincode"
                     :readonly="!editMode"
                     class="custom-text-field"
                   ></v-text-field>
@@ -93,7 +93,7 @@
                   <v-text-field
                     variant="outlined"
                     label="City"
-                    v-model="student.city"
+                    v-model="student.address.city"
                     :readonly="!editMode"
                     class="custom-text-field"
                   ></v-text-field>
@@ -102,7 +102,7 @@
               <v-text-field
                 variant="outlined"
                 label="State"
-                v-model="student.state"
+                v-model="student.address.state"
                 :readonly="!editMode"
                 class="custom-text-field"
               ></v-text-field>
@@ -111,41 +111,66 @@
                 <v-btn @click="toggleEditMode">
                   {{ editMode ? "Cancel" : "Edit" }}
                 </v-btn>
-                <v-btn v-if="editMode" @click="saveChanges">Save</v-btn>
+                <v-btn v-if="editMode" @click="updateProfile">Save</v-btn>
               </v-card-actions>
               <!-- Add more fields as needed -->
             </v-card-text>
           </v-card>
-        </v-col>        
-
+        </v-col>
       </v-row>
     </v-container>
   </div>
 </template>
 
 <script>
+import userApi from "../../services/userApi";
+
 export default {
   data() {
     return {
       student: {
-        firstName: "Guneet",
-        lastName: "Singh",
-        email: "Guneets@argusoft.com",
-        phoneNumber: "6393970007",
-        fathersName: "Rajendra Singh",
-        mothersName: "Harpreet Kaur",
-        addressLine1: "A-66 Argusoft",
-        pincode: "382016",
-        city: "Gandhinagar",
-        state: "Gujarat",
-        // Add more student information fields here
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone: "",
+        father_name: "",
+        mother_name: "",
+        address: {
+          address_line: "",
+          pincode: "",
+          city: "",
+          state: "",
+        },
       },
       editMode: false,
     };
   },
+  
+  created() {
+    this.getProfile();
+  },
   methods: {
     toggleEditMode() {
       this.editMode = !this.editMode;
+    },
+    async getProfile() {
+      const res = await userApi.getUserData();
+      if (res.data.success) {
+        this.student = res.data.user;
+      }
+      else{
+        console.log("error fetching the profile");
+      }
+    },
+    async updateProfile() {
+      const res = await userApi.updateUserData(this.student);
+      if(res.data.success){
+        this.editMode = false;
+        console.log("user Updated Successfully");
+      }
+      else{
+        console.log("error updating the user");
+      }
     },
   },
 };
@@ -157,11 +182,10 @@ export default {
 .profileContainer {
   margin-top: 80px;
 }
-.img{
-    display: flex;
-    justify-content: center;  /* Horizontal centering */
-    align-items: center;      /* Vertical centering */
-  
+.img {
+  display: flex;
+  justify-content: center; /* Horizontal centering */
+  align-items: center; /* Vertical centering */
 }
 .profile-image {
   display: flex;

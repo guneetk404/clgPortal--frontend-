@@ -2,23 +2,24 @@
   <div class="documentContainer">
     <h2 class="a-heading">Documents</h2>
     <hr />
-    <v-card class="shadow-card" style=" margin: 25px">
+    <v-card class="shadow-card" style="margin: 25px">
       <div class="announcement" v-for="doc in documents" :key="doc.id">
         <v-card-text>
           <div class="document-content">
             <h3>
               <span class="mr-4">{{ doc.title }}</span>
               <span class="announcement-date"> ({{ doc.date }}) </span>
-              <span class="float-right mr-4 ">
-                Document Id : {{ doc.documentId }}
+              <span class="float-right mr-4">
+                <!-- Document Id : {{ doc.documentId }} -->
               </span>
             </h3>
-            <div class="content mt-4">
+            <!-- <div class="content mt-4">
               {{ doc.description }}
-            </div>
+            </div> -->
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-icon small>mdi-download</v-icon>
+              <a :href="doc.attachment_url" target="_blank">Download</a>
             </v-card-actions>
           </div>
         </v-card-text>
@@ -28,48 +29,29 @@
 </template>
 
 <script>
+import documentApi from "../../services/documentApi";
 export default {
   data() {
     return {
       documents: [
         {
-          documentId: 17854,
           title: "First Semester Result",
           date: "16 Oct 2023",
-          description:
-            "This is the notification for the students to view the results of final Exams of session January-July batch (2024)",
-        },
-        {
-          documentId: 17857,
-          title: "Second Semester Result",
-          date: "26 Oct 2023",
-          description:
-            "This is the notification for the students to view the results of final Exams of session July-december batch (2024)",
-        },
-        {
-          documentId: 17974,
-          title: "Third Semester Result",
-          date: "26 Oct 2023",
-          description:
-            "This is the notification for the students to view the results of final Exams of session January-July batch (2024)",
-        },
-        {
-          documentId: 17857,
-          title: "Fourth Semester Result",
-          date: "26 Oct 2023",
-          description:
-            "This is the notification for the students to view the results of final Exams of session July-december batch (2024)",
-        },
-        {
-          documentId: 17974,
-          title: "Fifth Semester Result",
-          date: "26 Oct 2023",
-          description:
-            "This is the notification for the students to view the results of final Exams of session January-July batch (2024)",
+          attachment_url: "hi",
         },
         // Add more document objects as needed
       ],
     };
+  },
+  created() {
+    this.getDocuments();
+  },
+  methods: {
+    async getDocuments() {
+      const res = await documentApi.getDocuments();
+      this.documents = res.data.data;
+      console.log(res.data);
+    },
   },
 };
 </script>
