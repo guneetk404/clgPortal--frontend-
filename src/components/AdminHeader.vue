@@ -53,7 +53,7 @@
           </v-col>
         </v-row>
       </v-list-item>
-      <v-list-item link to="/admin">
+      <v-list-item link to="/admin/post-documents">
         <v-row>
           <v-col cols="auto">
             <v-list-item-icon>
@@ -62,7 +62,7 @@
             </v-list-item-icon>
           </v-col>
           <v-col>
-            <v-list-item-title>Student Document</v-list-item-title>
+            <v-list-item-title> Post Student Document</v-list-item-title>
           </v-col>
         </v-row>
       </v-list-item>
@@ -74,7 +74,7 @@
             </v-list-item-icon>
           </v-col>
           <v-col>
-            <v-list-item-title>Student Profile</v-list-item-title>
+            <v-list-item-title> My Profile</v-list-item-title>
           </v-col>
         </v-row>
       </v-list-item>

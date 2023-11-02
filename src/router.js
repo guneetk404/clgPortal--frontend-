@@ -19,6 +19,7 @@ import AdminEnquiry from "./pages/adminPages/AdminEnquiry.vue"
 import AdminFeedback from "./pages/adminPages/AdminFeedback.vue"
 import RegisterStudent from "./pages/adminPages/registerStudent.vue"
 import AllStudents from "./pages/adminPages/AllStudents.vue"
+import PostDocumnets from "./pages/adminPages/PostDocuments.vue"
 
 const routes = [
   {
@@ -149,6 +150,16 @@ const routes = [
       {
         path:"",
         component:RegisterStudent
+      }
+    ]
+  },
+  {
+    path: "/admin/post-documents",
+    component: AdminHeader,
+    children:[
+      {
+        path:"",
+        component:PostDocumnets
       }
     ]
   },
