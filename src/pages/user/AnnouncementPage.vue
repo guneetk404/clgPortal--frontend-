@@ -44,7 +44,10 @@
             <div class="content">
               {{ announcement.description }}
             </div>
-
+            <div class="content">
+              Category:
+              {{ announcement.category }}
+            </div>
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-icon small>mdi-download</v-icon>

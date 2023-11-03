@@ -58,7 +58,11 @@
                 </div>
               </div>
 
-              <v-textarea variant="outlined" label="Suggestions"></v-textarea>
+              <v-textarea
+                variant="outlined"
+                v-model="formData.suggestion"
+                label="Suggestions"
+              ></v-textarea>
             </v-card-text>
 
             <!-- Submit Button -->
@@ -74,6 +78,8 @@
 
 <script>
 import feedbackApi from "../../services/feedbackApi";
+import { toast } from "vue3-toastify";
+
 export default {
   data() {
     return {
@@ -100,10 +106,15 @@ export default {
   },
   methods: {
     async submitFeedback() {
-      const data = { ...this.formData, feedback: this.feedback };
-      console.log(data);
-      const res = await feedbackApi.postFeedback(data);
-      console.log(res);
+      try {
+        const data = { ...this.formData, feedback: this.feedback };
+        const res = await feedbackApi.postFeedback(data);
+        if (res.data.success) {
+          toast.success("feedback Submitted Successfully");
+        }
+      } catch (error) {
+        toast.error("Error Submitting Feedback");
+      }
     },
     async getFeedbackParameter() {
       const res = await feedbackApi.getFeedbackParams();

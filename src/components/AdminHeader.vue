@@ -66,7 +66,7 @@
           </v-col>
         </v-row>
       </v-list-item>
-      <v-list-item link to="/admin">
+      <!-- <v-list-item link to="/admin">
         <v-row>
           <v-col cols="auto">
             <v-list-item-icon>
@@ -77,7 +77,7 @@
             <v-list-item-title> My Profile</v-list-item-title>
           </v-col>
         </v-row>
-      </v-list-item>
+      </v-list-item> -->
       <v-list-item link to="/admin-feedback">
         <v-row>
           <v-col cols="auto">
@@ -135,23 +135,26 @@
 </template>
 
 <script>
+import router from "@/router";
+import { toast } from "vue3-toastify";
+
 export default {
   data() {
     return {
-      userEmail: "Guneetk404@gmail.com",
+      userEmail: localStorage.getItem("email"),
       drawer: false,
       userMenuVisible: false,
-      userName: "Guneet Singh",
+      userName: localStorage.getItem("fname") + localStorage.getItem("lname"),
     };
   },
   methods: {
     toggleUserMenu() {
       this.userMenuVisible = !this.userMenuVisible;
     },
-    logout() {
-      // Implement your logout logic here, e.g., clearing user session or tokens.
-      // After logging out, you can redirect the user to the login page.
-      // You may also need to clear user data like userName from data.
+    async onLogout() {
+      localStorage.clear();
+      await router.push("/");
+      toast.success("Successfully Logged Out");
     },
   },
 };

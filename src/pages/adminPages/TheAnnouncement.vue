@@ -112,11 +112,13 @@
 </template>
 
 <script>
+import { toast } from "vue3-toastify";
+
 import { VDataTable } from "vuetify/labs/VDataTable";
 import { getAnnouncements } from "../../services/announcementApi.js";
 import { postAnnouncement } from "../../services/announcementApi.js";
-import {deleteAnnouncement} from "../../services/announcementApi.js";
-import {updateAnnouncement} from "../../services/announcementApi.js"
+import { deleteAnnouncement } from "../../services/announcementApi.js";
+import { updateAnnouncement } from "../../services/announcementApi.js";
 
 export default {
   components: {
@@ -205,13 +207,20 @@ export default {
       this.dialogDelete = true;
     },
 
-   async  deleteItemConfirm() {
+    async deleteItemConfirm() {
       // console.log(this.editedItem._id);
-      const id = this.editedItem._id;
-      const res = await deleteAnnouncement(id)
-      console.log(res);
-      this.announcements.splice(this.editedIndex, 1);
-      this.closeDelete();
+      try {
+        const id = this.editedItem._id;
+        const res = await deleteAnnouncement(id);
+        if (res.data.success) {
+          this.announcements.splice(this.editedIndex, 1);
+          toast.success("Announcement Deleted Successfully");
+          this.closeDelete();
+        }
+      } catch (error) {
+        toast.error(" Error Deleting Announcement");
+        this.closeDelete();
+      }
     },
 
     close() {
@@ -230,19 +239,34 @@ export default {
       });
     },
 
-   async save() {
-     if (this.editedIndex > -1) {
-        console.log(this.editedItem);
-        const id = this.editedItem._id;
-        const data = this.editedItem
-        const res = await updateAnnouncement(id,data);
-        console.log(res);
-        Object.assign(this.announcements[this.editedIndex], this.editedItem);
+    async save() {
+      if (this.editedIndex > -1) {
+        // console.log(this.editedItem);
+        try {
+          const id = this.editedItem._id;
+          const data = this.editedItem;
+          const res = await updateAnnouncement(id, data);
+          if (res.data.success) {
+            Object.assign(
+              this.announcements[this.editedIndex],
+              this.editedItem
+            );
+            toast.success("Announcement Updated Successfully");
+          }
+        } catch (error) {
+          toast.error("Error Updating The Announcement");
+        }
       } else {
-        // this.editedItem.date = new Date();
-        this.announcements.push(this.editedItem);
-        const res = await postAnnouncement(this.editedItem);
-        console.log(res);
+        try {
+          const res = await postAnnouncement(this.editedItem);
+          if(res.data.success){
+            this.announcements.push(this.editedItem);
+            toast.success("Announcement Added Successfully");
+          }
+        } catch (error) {
+          toast.error("Error Adding The Announcement");
+
+        }
       }
       this.close();
     },
@@ -251,8 +275,7 @@ export default {
 </script>
 
 <style>
-
-.adminAnnouncementContainer{
-  margin-top:75px;
+.adminAnnouncementContainer {
+  margin-top: 70px;
 }
 </style>

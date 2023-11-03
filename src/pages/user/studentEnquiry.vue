@@ -70,7 +70,9 @@
                 <!-- <v-card-subtitle class="inquiry-subtitle"
                 >Description: {{ inquiry.comments.comment_id.comment }}</v-card-subtitle
               > -->
-                <div class="float-right mr-4 " > Status : {{inquiry.status}}</div>
+                <div class="float-right mr-4">
+                  Status : {{ inquiry.status }}
+                </div>
               </v-card-item>
             </v-card>
           </v-card-text>
@@ -83,6 +85,7 @@
 <script>
 import enquiryApi from "../../services/enquiryApi.js";
 import userApi from "../../services/userApi";
+import { toast } from "vue3-toastify";
 
 export default {
   data() {
@@ -92,7 +95,7 @@ export default {
       inquiry: {
         title: "This Query is related to fee structure",
         description: "I want the  details regarding btech cse course fees",
-        status:""
+        status: "",
       },
       phone: null,
       email: "",
@@ -104,21 +107,26 @@ export default {
   },
   methods: {
     async submitForm() {
-      const res = await enquiryApi.postEnquiry(this.inquiry);
-      if (res.data.success) {
-        this.inquiries.push({ ...this.inquiry });
-      } else {
-        console.log("error posting query");
+      try {
+        const res = await enquiryApi.postEnquiry(this.inquiry);
+        if (res.data.success) {
+          this.inquiries.push({ ...this.inquiry, status: "pending" });
+          toast.success("Enquiry Posted Successfully");
+        }
+      } catch (error) {
+        toast.error("Error Posting Enquiry");
       }
     },
     async getEnquiries() {
-      const res = await enquiryApi.getEnquiries();
-      if (res.data.success) {
-        this.inquiries = res.data.data;
-        console.log(this.inquiries);
-        console.log(this.inquiries[5].comments[0].comment_id.comment);
-      } else {
-        console.log("error getting queries");
+      try {
+        const res = await enquiryApi.getEnquiries();
+        if (res.data.success) {
+          this.inquiries = res.data.data;
+          console.log(this.inquiries);
+          // console.log(this.inquiries[5].comments[0].comment_id.comment);
+        }
+      } catch (error) {
+        toast.error("Error Fetching the Enquiries!");
       }
     },
     async profileInformation() {
@@ -126,8 +134,6 @@ export default {
       if (res.data.success) {
         this.phone = res.data.user.phone;
         this.email = res.data.user.email;
-      } else {
-        console.log("profile not fetched");
       }
     },
   },
@@ -162,5 +168,8 @@ export default {
 
 .inquiry-subtitle {
   width: 100%; /* Make text span the entire width */
+  color:black !important;
+  font-weight: bold !important;
+
 }
 </style>

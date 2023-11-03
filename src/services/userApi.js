@@ -1,6 +1,11 @@
 import api from "./api";
 
 export default {
+
+  async loginHelper(data){
+    return api.post("/user/login",data)
+  },
+
   async getUserData() {
     return api.get("/user/");
   },
@@ -11,4 +16,8 @@ export default {
   async createUser(data) {
     return api.post("/user/add-user", data);
   },
+
+  async bulkRegisterHelper(data){
+    return api.post("/user/add/bulk",data)
+  }
 };

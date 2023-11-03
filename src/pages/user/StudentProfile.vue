@@ -124,6 +124,7 @@
 
 <script>
 import userApi from "../../services/userApi";
+import { toast } from "vue3-toastify";
 
 export default {
   data() {
@@ -145,31 +146,35 @@ export default {
       editMode: false,
     };
   },
-  
+
   created() {
     this.getProfile();
   },
   methods: {
     toggleEditMode() {
+      if(!this.editMode){
+        toast.success("You can Edit your Profile",{ autoClose:1500 });
+      }
       this.editMode = !this.editMode;
+      
     },
     async getProfile() {
       const res = await userApi.getUserData();
       if (res.data.success) {
         this.student = res.data.user;
-      }
-      else{
+      } else {
         console.log("error fetching the profile");
       }
     },
     async updateProfile() {
-      const res = await userApi.updateUserData(this.student);
-      if(res.data.success){
-        this.editMode = false;
-        console.log("user Updated Successfully");
-      }
-      else{
-        console.log("error updating the user");
+      try {
+        const res = await userApi.updateUserData(this.student);
+        if (res.data.success) {
+          this.editMode = false;
+          toast.success("User Profile Updated Successfully",{ autoclose: 2000 } );
+        }
+      } catch (error) {
+        toast.error("Error Updating the User",{autoClose: 2000});
       }
     },
   },

@@ -3,7 +3,7 @@
   <v-app-bar app color="#6b130d">
     <v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
     <v-spacer></v-spacer>
-    <v-menu :close-on-content-click="false" location="end">
+    <v-menu :close-on-content-click="true" location="end">
       <template v-slot:activator="{ props }">
         <v-btn color="#802f59" v-bind="props">
           <v-icon color="white" icon="mdi-account" />
@@ -18,7 +18,7 @@
         <v-card-actions>
           <v-spacer></v-spacer>
 
-          <v-btn variant="text" @click="menu = false"> Cancel </v-btn>
+          <v-btn variant="text"> Cancel </v-btn>
           <v-btn color="primary" variant="text" @click="onLogout"
             >logout
           </v-btn>
@@ -59,7 +59,6 @@
             <v-list-item-icon>
               <v-icon>mdi-arrow-right</v-icon>
               <!-- <v-icon>mdi-file-document-outline</v-icon> -->
-
             </v-list-item-icon>
           </v-col>
           <v-col>
@@ -112,23 +111,26 @@
 </template>
 
 <script>
+import router from "@/router";
+import { toast } from "vue3-toastify";
+
 export default {
   data() {
     return {
-      userEmail: "Guneetk404@gmail.com",
+      userEmail: localStorage.getItem("email"),
       drawer: false,
       userMenuVisible: false,
-      userName: "Guneet Singh",
+      userName: localStorage.getItem("fname") + localStorage.getItem("lname"),
     };
   },
   methods: {
     toggleUserMenu() {
       this.userMenuVisible = !this.userMenuVisible;
     },
-    logout() {
-      // Implement your logout logic here, e.g., clearing user session or tokens.
-      // After logging out, you can redirect the user to the login page.
-      // You may also need to clear user data like userName from data.
+    async onLogout() {
+      localStorage.clear();
+      await router.push("/");
+      toast.success("Successfully Logged Out");
     },
   },
 };

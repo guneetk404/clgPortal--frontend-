@@ -69,8 +69,8 @@
       </v-col>
     </v-row>
     <!-- </div> -->
-    <v-row>
-      <v-col cols="8">
+    <v-row >
+      <v-col cols="8" class="item-1">
         <v-card>
           <v-card-title class="headline">
             <v-icon size="extra-small">mdi-bell-ring</v-icon> Announcement
@@ -90,6 +90,11 @@
                 </h3>
                 <div class="content">
                   {{ announcement.description }}
+
+                </div>
+                <div class="content">
+
+                 Category: {{ announcement.category }}
                 </div>
                 <v-card-actions>
                   <v-spacer></v-spacer>
@@ -101,7 +106,7 @@
           </div>
         </v-card>
       </v-col>
-      <v-col cols="4">
+      <v-col cols="4" class="item-1">
         <v-card class="mx-auto" height="240px">
           <v-row style="background: rgb(145, 58, 20)">
             <v-col cols="8">
@@ -117,7 +122,7 @@
             <p class="text--primary">No Documents available</p>
           </v-card-text>
         </v-card>
-        <v-card class="mx-auto mt-4" height="340px">
+        <v-card class="mx-auto mt-4 item-1" height="340px" >
           <v-row c style="background: rgb(87, 8, 35)">
             <v-col cols="8">
               <v-card-text>
@@ -150,6 +155,7 @@ export default {
           date: "11 Oct 2023",
           description: "Description for announcement 1",
           attachment_url: "url_for_announcement_1.pdf",
+          category: "",
         },
       ],
       first_name: "",
@@ -159,11 +165,11 @@ export default {
       branch: "Computer Science Engineering",
       inquiries: [
         {
-          title:"",
-          description:"",
-          date:"",
-          status:"",
-        }
+          title: "",
+          description: "",
+          date: "",
+          status: "",
+        },
       ],
     };
   },
@@ -177,6 +183,7 @@ export default {
       const res = await getAnnouncements();
       if (res.data.success) {
         this.announcements = res.data.data;
+        
       } else {
         console.log("annnoucement not fetched");
       }

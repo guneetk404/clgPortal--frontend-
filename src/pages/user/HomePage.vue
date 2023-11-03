@@ -1,6 +1,6 @@
 <template>
   <div class="homecontainer" style="margin-top: '10rem'">
-    <v-carousel class="carousel" :show-arrows=false hide-delimiters>
+    <v-carousel class="carousel" :show-arrows="false" hide-delimiters>
       <v-carousel-item
         src="https://cdn.vuetifyjs.com/images/cards/docks.jpg"
         cover
@@ -34,8 +34,8 @@
         <!-- <h3>Sign in using Google Account</h3>
         <GoogleLogin :callback="handleGoogleLogin" class="google-login" /> -->
         <div class="notreg">
-          <span>Not Registered?</span>
-          <router-link to="/dashboard">Sign Up here</router-link>
+          <!-- <span>Not Registered?</span> -->
+          <!-- <router-link to="/dashboard">Sign Up here</router-link> -->
           <div>
             <router-link to="/reset-password">Forget Password</router-link>
           </div>
@@ -47,7 +47,50 @@
 </template>
 
 <script>
-export default {};
+import router from "@/router";
+import { toast } from "vue3-toastify";
+
+import userApi from "../../services/userApi";
+export default {
+  data() {
+    return {
+      username: "",
+      password: "",
+    };
+  },
+
+  methods: {
+    async login() {
+      try {
+        const data = {
+          email: this.username,
+          password: this.password,
+        };
+        const res = await userApi.loginHelper(data);
+        if (res.data.success) {
+          localStorage.setItem("token", res.data.token);
+          localStorage.setItem("email", res.data.user.email);
+          localStorage.setItem("fname",res.data.user.first_name)
+          localStorage.setItem("lname",res.data.user.last_name)
+
+          console.log("successfully logged in");
+          if (res.data.user.isAdmin) {
+            await router.push("/admin");
+          } else {
+            await router.push("/dashboard");
+          }
+          toast.success("Successfully Logged in", { autoclose: 5000 });
+        } else {
+          toast.error("Please check Your Credentials", { autoclose: 5000 });
+        }
+      } catch (error) {
+        toast.error("Please check Your Credentials :)", { autoclose: 5000 });
+
+        console.log(error);
+      }
+    },
+  },
+};
 </script>
 
 <style scoped>

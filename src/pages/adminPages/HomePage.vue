@@ -1,6 +1,6 @@
 <template>
   <div class="adminHomeContainer">
-    <h1>hi</h1>
+    <h2>Admin Dashboard Under Development</h2>
   </div>
 </template>
 
